@@ -1,0 +1,1 @@
+# This project is a full-featured backend API built using Node.js, Express.js, and MongoDB.
