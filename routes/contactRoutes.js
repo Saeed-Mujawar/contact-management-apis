@@ -67,19 +67,33 @@ router.route("/").get(getContacts).post(createContact);
  * /api/contacts/search:
  *   get:
  *     tags: [Contacts]
- *     summary: Search for contacts
+ *     summary: Search for contacts by name, email, or phone
  *     security:
  *       - bearerAuth: [] 
  *     parameters:
  *       - in: query
- *         name: query
- *         required: true
- *         description: Search term
+ *         name: name
+ *         required: false
+ *         description: Name to search for
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: email
+ *         required: false
+ *         description: Email to search for
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: phone
+ *         required: false
+ *         description: Phone number to search for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: List of contacts matching search term
+ *         description: List of contacts matching the search criteria
+ *       400:
+ *         description: Please provide at least one search term
  *       401:
  *         description: Unauthorized
  */
