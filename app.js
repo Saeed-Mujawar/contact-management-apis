@@ -21,7 +21,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:5000', // Adjust this to your server URL
+                url: process.env.DOMAIN || 'http://localhost:5000', // Adjust this to your server URL
             },
         ],
         components: {
