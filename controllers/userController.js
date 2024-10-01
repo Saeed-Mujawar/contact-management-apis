@@ -4,8 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { addToken } = require("../config/blacklist");
 const nodemailer = require("nodemailer");
-
-
+const Contact = require("../models/contactModel")
 
 //@desc Register a User
 //@route POST /api/users/register
@@ -222,6 +221,24 @@ const resetPassword = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Password reset successfully!" });
 });
 
+//@desc Delete User
+//@route DELETE /api/users/delete
+//@access private
+const deleteUser = asyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+    }
+
+    await Contact.deleteMany({ user_id: req.user.id });
+
+    await User.findByIdAndDelete(req.user.id);
+
+    res.status(200).json({ message: "User account and all associated contacts deleted successfully!" });
+});
+
 module.exports = {  
     registerUser,
     loginUser,
@@ -230,5 +247,6 @@ module.exports = {
     logoutUser,
     requestPasswordReset,
     resetPassword,
+    deleteUser
 };
     
