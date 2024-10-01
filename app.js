@@ -43,8 +43,17 @@ app.use(express.json());
 app.use("/api/contacts", require("./routes/contactRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 
+// Welcome route
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: "Welcome to the Contact Management API!",
+        instructions: `To test the API, visit the Swagger UI at: ${process.env.DOMAIN}/docs`
+    });
+});
+
+
 // Swagger UI route
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Error handling middleware
 app.use(errorHandler);
